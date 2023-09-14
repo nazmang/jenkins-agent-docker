@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_HUB_REPO = 'nazman' 
         IMAGE_NAME = 'inbound-agent-docker' 
-        GIT_REPO_URL = 'https://github.com/nodejs/nodejs.org.git' 
+        GIT_REPO_URL = 'https://github.com/nazmang/jenkins-agent-docker.git' 
         GIT_BRANCH = 'main' 
         DOCKER_HUB_CREDENTIALS_ID = 'dockerhub' 
     }

@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'jnlp-agent-docker'}
 
     environment {
         DOCKER_HUB_REPO = 'nazman' 

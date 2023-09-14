@@ -24,7 +24,7 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 script {
-                    def buildDate = currentBuild.timestamp.format('yyyyMMdd') // Get the current date
+                    def buildDate = new Date().format('yyyyMMdd') // Get the current date
                     def buildNumber = currentBuild.number // Get the build number
 
                     // Build the Docker image with a tag in the format YYYYMMDD-build_number

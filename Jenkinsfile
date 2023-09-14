@@ -31,7 +31,7 @@ pipeline {
                     def dockerImage = docker.build("${env.DOCKER_HUB_REPO}/${env.IMAGE_NAME}:${buildDate}-${buildNumber}")
 
                     // Add the 'latest' tag to the image
-                    dockerImage.tag("${env.DOCKER_HUB_REPO}/${env.IMAGE_NAME}:latest")
+                    dockerImage.tag("latest")
 
                     // Login to Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', env.DOCKER_HUB_CREDENTIALS_ID) {

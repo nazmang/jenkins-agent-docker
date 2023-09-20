@@ -2,11 +2,20 @@ pipeline {
     agent {label 'jnlp-agent-docker'}
 
     environment {
+        // Telegram configre
+        TOKEN = credentials('telegramToken')
+        CHAT_ID = credentials('telegramChatid')
+
+        // Telegram Message Success and Failure
+        TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
+        TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
+
+        DOCKER_HUB_CREDENTIALS_ID = 'dockerhub' 
         DOCKER_HUB_REPO = 'nazman' 
         IMAGE_NAME = 'inbound-agent-docker' 
         GIT_REPO_URL = 'https://github.com/nazmang/jenkins-agent-docker.git' 
         GIT_BRANCH = 'main' 
-        DOCKER_HUB_CREDENTIALS_ID = 'dockerhub' 
+        
     }
 
     stages {
@@ -40,6 +49,19 @@ pipeline {
                         dockerImage.push("latest")
                     }
                 }
+            }
+        }
+    }
+
+    post {
+        success {
+            script{
+                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_SUCCESS_BUILD}' --form chat_id='${CHAT_ID}'"
+            }
+        }
+        failure {
+            script{
+                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_FAILURE_BUILD}' --form chat_id='${CHAT_ID}'"
             }
         }
     }
